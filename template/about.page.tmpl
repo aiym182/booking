@@ -1,0 +1,25 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                This is aboutpage.
+            </h1>
+            <p class="subtitle">
+                There is something about this page
+            </p>
+            <p class="subtitle">This came from the template data : {{index .StringMap "test"}}</p>
+            <p class="subtitle">
+                {{if ne (index .StringMap "remote_ip") ""}}
+                    Your remote ip adress is : {{index .StringMap "remote_ip"}}
+                {{else}}
+                    I don't know your ip adress. Please visit the <a href="/">HomePage</a> so I can set it.
+                {{end}}
+
+            </p>
+        </div>
+        
+    </section>
+
+{{end}}
