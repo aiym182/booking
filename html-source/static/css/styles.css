@@ -1,0 +1,14 @@
+.room-image {
+  max-width: 50%;
+}
+.redText {
+  color: red;
+}
+
+.datepicker {
+  z-index: 100;
+}
+
+.notie-alert {
+  z-index: 100;
+}

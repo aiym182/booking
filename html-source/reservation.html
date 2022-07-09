@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>My nice page</title>
+
+    
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+      />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bulma.min.css">
+      <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+      <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+    </head>
+    <body>
+   
+      <nav
+        class="navbar is-black is-fixed-top"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img
+              src="https://bulma.io/images/bulma-logo.png"
+              width="112"
+              height="28"
+            />
+          </a>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item has-text-white" href="index.html">
+              Home
+            </a>
+
+            <a class="navbar-item has-text-white" href="about.html">
+              About
+            </a>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link has-text-white is-arrowless">
+                Rooms
+              </a>
+
+              <div class="navbar-dropdown is-boxed">
+                <a class="navbar-item" href="generals.html">
+                  General's quaters
+                </a>
+                <a class="navbar-item" href="majors.html">
+                  Major's suite
+                </a>
+              </div>
+            </div>
+            <a class="navbar-item has-text-white" href="reservation.html">
+              Book Now
+            </a>
+
+            <a class="navbar-item has-text-white" href="contact.html">
+              Contact
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <section class="section">
+        <div class="container">
+        <div class="columns">
+
+            <div class="column is-3"></div>
+            <div class="column is-6">
+              <h1 class="is-size-3 my-3 has-text-black">
+                  Search for availability
+              </h1>
+              <form action="reservation.html" method="get" id="need-validation">
+                <div class="columns " id="date_picker">
+                    <div class="column is-half ">
+                      <label for="start" class="label" >Start date</label>
+                       <div class="control">
+                          <input required type="text"class="input" name="start" placeholder="MM/DD/YYYY"></input>
+                          <p class="help sh"id=sh>Select an available date</p>
+                      </div>
+                    </div>
+
+                    <div class="column is-half">
+                      <label for="start" class="label" >End date</label>
+                        <div class="control">
+                            <input required type="text"class="input" name="end" placeholder="MM/DD/YYYY"></input>
+                            <p class="help eh"id=eh>Select an available date</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                    <hr>
+                    <button type="submit" id = "submit_button" class="button is-primary submit-button" >Search availability</button>
+
+              </form> 
+            
+         
+              <hr>
+              <button class="button is-danger" id="noti">Click Me</button>
+
+            </div>
+
+        </div>
+         
+      </section>
+
+      <footer class="footer has-background-grey">
+        <div class="content has-text-centered has-text-white">
+          <p>
+            This website is from Brown bag which was former company of
+            MollyGames
+          </p>
+        </div>
+      </footer>
+      <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+      <script src="https://unpkg.com/notie"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+     <script>
+      let attention = Promt()
+
+      const elem = document.getElementById('date_picker');
+      const options ={
+        button: 'button',
+        clearBtn:true,
+        todayBtn:true,
+      }
+        const rangepicker = new DateRangePicker(elem, options)
+      const noti = document.getElementById('noti');
+      noti.addEventListener("click",()=>{
+        // notify("This is error message",'error')
+        // notifyModal('title',"<em>Hello World</em>",'success','My text for the button')
+
+        // attention.toast({msg:"Hello World"})
+        // attention.success({title:"Hello World",msg:"Now you are into this new world of go."})
+        // attention.error({title:"Uh oh..",msg:"Something is seriously wrong right now."})
+        let html = `
+          <form id="check-availablity-from" action="" method="post" novalidate class="need-validation">
+              <div class="columns" id="reservation-dates-modal">
+                <div class="column is-half"> 
+                  <label class="label" for="sm">
+                    <div class="control">
+                      <input disabled required id="sm" type="text"class="input" name="sm" placeholder="MM/DD/YYYY"></input>
+                      <p class="help sh"id=sh>Select an available date</p>
+                    </div>    
+                  </label>         
+                </div>
+
+                <div class="column is-half"> 
+                  <label class="label" for="em">
+                    <div class="control">
+                      <input disabled required id="em" type="text"class="input" name="em" placeholder="MM/DD/YYYY"></input>
+                      <p class="help sh"id=sh>Select an available date</p>
+                    </div>    
+                  </label>         
+                </div>
+              </div>
+          
+          </form>`
+
+          attention.custom({msg:html,title:"Check availability"})
+      })
+
+     
+
+
+
+      function notify(msg, msgType){
+        notie.alert({
+          type: msgType,
+          text:msg,
+          position:'top',
+        })
+      }
+
+      function notifyModal(title,text,icon,confirmButtonText){
+        
+     
+        Swal.fire({
+            title: title,
+            html: text ,
+            icon: icon,
+            confirmButtonText: confirmButtonText,
+        })
+      }
+
+      function Promt(){
+        let toast = function (c){
+
+          const {
+            msg ="",
+            icon = "success",
+            position = "top-end",
+
+          } = c
+
+            const Toast = Swal.mixin({
+            toast: true,
+            title:msg,
+            position: position,
+            icon:icon,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+             }
+           })
+
+            Toast.fire()
+
+
+        }
+        let success = function (c){
+
+          const {
+            icon = 'success',
+            title = "",
+            msg = "",
+
+          } = c
+
+          Swal.fire({
+              title: title,
+              text: msg,
+          })
+
+        }
+
+        let error = (c) =>{
+          const {
+            icon = "error",
+            title = "",
+            msg = "",
+
+          } = c
+
+          Swal.fire({
+              title: title,
+              text: msg,
+          })
+        }
+
+       async function custom(c){
+          const{
+            msg = "",
+            title = "",
+          } = c 
+
+          const {
+            value :formValues, 
+          } = await Swal.fire({
+            title:title,
+            html:msg,
+            backdrop:false,
+            focusConfirm:false,
+            showCancelButton:true,
+            willOpen:()=>{
+              const el = document.getElementById('reservation-dates-modal')
+              const dp = new DateRangePicker(el,{
+                button: 'button',
+                 clearBtn:true,
+                 todayBtn:true,
+                 showOnFocus:true,
+              })
+            },
+            preConfirm:()=>{
+              return [
+                document.getElementById('sm').value,
+                document.getElementBYId('em').value
+              ]
+            },
+            didOpen:()=>{
+              document.getElementById('sm').removeAttribute('disabled')
+              document.getElementById('em').removeAttribute('disabled')
+            }
+          })
+          if(formValues){
+            Swal.fire(JSON.stringify(formValues))
+          }
+
+        }
+
+        
+
+        return {
+          toast: toast,
+          success: success,
+          error : error,
+          custom: custom,
+        }
+      }
+      
+     </script>
+    </body>
+  </html>
+</html>

@@ -1,0 +1,17 @@
+.room-image {
+  max-width: 50%;
+}
+.redText {
+  color: red;
+}
+
+.datepicker {
+  z-index: 2;
+}
+.swal2-popup {
+  z-index: 1;
+}
+
+.notie-alert {
+  z-index: 1000;
+}
