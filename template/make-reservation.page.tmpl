@@ -1,0 +1,120 @@
+{{template "base" .}}
+
+{{define "content"}}
+       <section class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column">
+              <h1 class="is-size-3 my-3 has-text-black">Make reservation</h1>
+
+
+              {{$res :=index .Data "reservation"}}
+              <form method="post" action="/make-reservation" class="needs-validation" novalidate>
+               <input type="hidden" name ="csrf_token" value='{{.CSRFToken}}'></input>
+                <div class="field">
+                  <label for="first_name" class="label">First name</label>
+                  <div class="control has-icons-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "first_name"}} is-danger {{end}}"
+                      type="text"
+                      name="first_name"
+                      id="first_name"
+                      placeholder="First Name"
+                      autocomplete="off"
+                      value = "{{$res.FirstName}}"
+                    />
+                    {{with .Forms.Errors.Get "first_name"}}
+                    <span class="icon is-right has-text-danger">
+                    <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="last_name" class="label">Last name</label>
+                  <div class="control has-icons-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "last_name"}} is-danger {{end}}"
+                      type="text"
+                      name="last_name"
+                      id="last_name"
+                      placeholder="Last name"
+                      autocomplete="off"
+                      value = "{{$res.LastName}}"
+
+                    />
+                    {{with .Forms.Errors.Get "last_name"}}
+                    <span class="icon is-right has-text-danger">
+                    <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="email" class="label">email</label>
+                  <div class="control has-icons-right has-icon-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "email"}} is-danger {{end}}"
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="example@email.com"
+                      autocomplete="off"
+                      value = "{{$res.Email}}"
+
+                    />
+
+                    {{with .Forms.Errors.Get "email"}}
+                    <span class="icon is-right has-text-danger">
+                    <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+                  
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="phone" class="label">Phone</label>
+                  <div class="control has-icons-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "phone"}} is-danger {{end}}"
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      placeholder="xxx-xxx-xxxx"
+                      autocomplete="off"
+                      value = "{{$res.Phone}}"
+                    />
+                      {{with .Forms.Errors.Get "phone"}}
+                    <span class="icon is-right has-text-danger">
+                    <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+
+                  </div>
+                </div>
+
+                
+                <div class="field mt-5">
+                    <div class ="control">
+                        <input type="submit" class="button is-primary" />
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+{{end}}

@@ -1,0 +1,112 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <div class="columns is-centered mt-6">
+        <figure class="room-image pt-4">
+            <img
+            src="/static/images/generals-quarters.png"
+            alt="Generals-quaters"
+            />
+        </figure>
+    </div>
+
+    <section class="section">
+        <div class="container has-text-centered">
+            <h1 class="is-size-3 my-3">
+            Welcome to General's Quaters
+            </h1>
+
+        <p>
+            This is your home away from home. Set on the majestic waters of the
+            Atlantic ocean. This is your vacation to remember. We will put so
+            much effort to make sure you have the best experience.
+        </p>
+
+        <div class="mt-4">
+            <a
+                class="button is-black is-medium is-responsive"
+                id="check-availability-button"
+                href="#!"
+            >
+            Make Reservation Now
+            </a>
+            </div>
+        </div>
+    </section>
+
+
+{{end}}
+
+
+{{define "js"}}
+    <script>
+      const noti = document.getElementById('check-availability-button');
+      if (noti){
+
+       noti.addEventListener("click",()=>{
+        let html = `
+          <form id="check-availablity-form" action="" method="post" novalidate class="need-validation">
+              <div class="columns" id="reservation-dates-modal">
+                <div class="column is-half"> 
+                  <label class="label" for="sm">
+                    <div class="control">
+                      <input disabled required id="sm" type="text"class="input" name="sm" placeholder="MM/DD/YYYY"></input>
+                      <p class="help sh"id=sh>Select an available date</p>
+                    </div>    
+                  </label>         
+                </div>
+
+                <div class="column is-half"> 
+                  <label class="label" for="em">
+                    <div class="control">
+                      <input disabled required id="em" type="text" class="input" name="em" placeholder="MM/DD/YYYY"></input>
+                      <p class="help sh"id=sh>Select an available date</p>
+                    </div>    
+                  </label>         
+                </div>
+              </div>
+          
+          </form>`
+
+          attention.custom({
+          msg:html,
+          title:"Check availability",
+          willOpen:()=>{
+              const el = document.getElementById('reservation-dates-modal')
+              const dp = new DateRangePicker(el,{
+                button: 'button',
+                 showOnFocus:true,
+                 
+              })
+            },
+            
+          didOpen:()=>{
+            document.getElementById('sm').removeAttribute('disabled')
+            document.getElementById('em').removeAttribute('disabled')
+          },
+
+
+          callback: function(result){
+
+          const form = document.getElementById("check-availablity-form")
+           let formData = new FormData(form)
+           let csrfToken = '{{.CSRFToken}}'
+          formData.append("csrf_token",csrfToken);
+             fetch('search-availability-json',{
+            method:'post',
+            body:formData,
+             })
+             .then(response=>response.json())
+            .then((data)=>{
+              console.log(data)
+              console.log(data.ok)
+              console.log(data.message)
+             })
+            }
+          })
+      })
+      }
+        </script>
+
+
+{{end}}

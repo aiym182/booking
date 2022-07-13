@@ -7,8 +7,9 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/aiym182/booking/pkg/config"
-	"github.com/aiym182/booking/pkg/models"
+	"github.com/aiym182/booking/internal/config"
+	"github.com/aiym182/booking/internal/models"
+	"github.com/justinas/nosurf"
 )
 
 var functions = template.FuncMap{}
@@ -19,14 +20,20 @@ func NewTemplates(a *config.Config) {
 	app = a
 }
 
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
 
+	//PopString() fetches string value for a given key and then delete it form session data.
+	td.Flash = app.Session.PopString(r.Context(), "flash")
+	td.Error = app.Session.PopString(r.Context(), "error")
+	td.Warning = app.Session.PopString(r.Context(), "warning")
+
+	td.CSRFToken = nosurf.Token(r)
 	return td
 
 }
 
 // Rendertemplate renders templates using html/templates
-func RenderTemplate(rw http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(rw http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 
 	var tc map[string]*template.Template
 	var err error
@@ -45,7 +52,7 @@ func RenderTemplate(rw http.ResponseWriter, tmpl string, td *models.TemplateData
 		log.Fatal("Cannot find any templates")
 	}
 
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 
 	err = t.Execute(rw, td)
 

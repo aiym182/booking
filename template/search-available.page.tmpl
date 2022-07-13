@@ -1,0 +1,61 @@
+{{template "base" .}}
+
+{{define "content"}}
+      <section class="section">
+        <div class="container">
+        <div class="columns">
+
+            <div class="column is-3"></div>
+            <div class="column is-6">
+              <h1 class="is-size-3 my-3 has-text-black">
+                  Search for availability
+              </h1>
+              <form action="/search-availability" method="post" id="need-validation">
+                <div class="columns " id="date_picker">
+                    <div class="column is-half ">
+                      <label for="start" class="label" >Start date</label>
+                       <div class="control">
+                          <input required type="text" class="input" name="start" placeholder="MM/DD/YYYY"></input>
+                          <p class="help sh"id=sh>Select an available date</p>
+                      </div>
+                    </div>
+
+                    <div class="column is-half">
+                      <label for="start" class="label" >End date</label>
+                        <div class="control">
+                            <input required type="text"class="input" name="end" placeholder="MM/DD/YYYY"></input>
+                            <p class="help eh"id=eh>Select an available date</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                    <hr>
+                    <button type="submit" id = "submit_button" class="button is-primary submit-button" >Search availability</button>
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}"></input>
+
+              </form> 
+            </div>
+
+        </div>
+         
+      </section>
+ 
+ {{end}}
+
+ {{define "js"}}
+ <script>
+    const elem = document.getElementById('date_picker');
+      const options ={
+        button: 'button',
+        clearBtn:true,
+        todayBtn:true,
+      }
+      const rangepicker =new DateRangePicker(elem, options)
+
+    const fm = document.getElementById('need-validation')
+
+    console.log(fm)
+ </script>
+
+ {{end}}

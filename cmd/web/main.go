@@ -1,13 +1,15 @@
 package main
 
 import (
+	"encoding/gob"
 	"log"
 	"net/http"
 	"time"
 
-	"github.com/aiym182/booking/pkg/config"
-	"github.com/aiym182/booking/pkg/handlers"
-	"github.com/aiym182/booking/pkg/render"
+	"github.com/aiym182/booking/internal/config"
+	"github.com/aiym182/booking/internal/handlers"
+	"github.com/aiym182/booking/internal/models"
+	"github.com/aiym182/booking/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 
@@ -17,7 +19,8 @@ var app = &config.Config{}
 var session *scs.SessionManager
 
 func main() {
-
+	//Register what am I going to put in the session. (things like struct)
+	gob.Register(models.Reservations{})
 	//change this to true in production
 	app.InProduction = false
 	session = scs.New()

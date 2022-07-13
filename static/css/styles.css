@@ -6,7 +6,7 @@
 }
 
 .datepicker {
-  z-index: 2;
+  z-index: 99999999999999;
 }
 .swal2-popup {
   z-index: 1;
@@ -14,4 +14,7 @@
 
 .notie-alert {
   z-index: 1000;
+}
+.dateform {
+  z-index: 9999999999999;
 }

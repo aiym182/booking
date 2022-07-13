@@ -2,13 +2,63 @@
 
 {{define "content"}}
 
- <div class="container">
-       <h1 class="title">This is HomePage</h1>
-      <a href="/about">Go to about page</a>
-      <figure class="image is-4by3">
-            <img src="/static/images/house.jpeg">
-      </figure>
+      <div class="hero is-fullheight has-carousel">
+        <div id="main-carousel" class="hero-carousel">
+          <div class="item-1" style="height: 100%; width: 100;">
+            <img src="/static/images/woman-laptop.png" alt="Woman with laptop" />
+          </div>
+          <div class="item-2" style="height: 100%; width: 100;">
+            <img src="/static/images/tray.png" alt="Tray" />
+          </div>
+          <div class="item-3" style="height: 100%; width: 100;">
+            <img src="/static/images/outside.png" alt="Outside" />
+          </div>
+        </div>
 
-</div>
+         <div class="hero-body">
+          <p
+            class="title has-text-white has-background-black has-text-centered"
+          >
+            Your getaway has never been the same.
+          </p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="conatiner has-text-centered">
+          <h1 class="is-size-3 py-3">
+            Welcome to Fort Smythe Bed and Breakfast
+          </h1>
+          <p>
+            This is your home away from home. Set on the majestic waters of the
+            Atlantic ocean. This is your vacation to remember. We will put so
+            much effort to make sure you have the best experience.
+          </p>
+          <div class="py-4">
+            <a class="button is-black is-medium is-responsive" href="/search-availability">
+              Make Reservation Now
+            </a>
+          </div>
+        </div>
+      </section>
+
+    
  
  {{end}}
+
+{{define "js"}}
+  <script>
+        bulmaCarousel.attach('#main-carousel', {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        autoplay: false,
+        navigation: true,
+        pagination: false,
+        effect: 'fade',
+        loop: true,
+        })
+  </script>
+
+{{end}}
+
+ 
