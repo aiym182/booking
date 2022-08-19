@@ -1,0 +1,22 @@
+mode: set
+github.com/aiym182/booking/internal/handlers/handlers.go:26.44,28.2 1 1
+github.com/aiym182/booking/internal/handlers/handlers.go:31.33,33.2 1 1
+github.com/aiym182/booking/internal/handlers/handlers.go:35.68,41.2 3 1
+github.com/aiym182/booking/internal/handlers/handlers.go:42.69,56.2 6 1
+github.com/aiym182/booking/internal/handlers/handlers.go:59.75,69.2 4 1
+github.com/aiym182/booking/internal/handlers/handlers.go:72.79,75.16 2 1
+github.com/aiym182/booking/internal/handlers/handlers.go:80.2,94.19 7 1
+github.com/aiym182/booking/internal/handlers/handlers.go:105.2,107.67 2 1
+github.com/aiym182/booking/internal/handlers/handlers.go:75.16,78.3 2 0
+github.com/aiym182/booking/internal/handlers/handlers.go:94.19,103.3 4 0
+github.com/aiym182/booking/internal/handlers/handlers.go:112.72,114.2 1 1
+github.com/aiym182/booking/internal/handlers/handlers.go:117.70,119.2 1 1
+github.com/aiym182/booking/internal/handlers/handlers.go:122.76,124.2 1 1
+github.com/aiym182/booking/internal/handlers/handlers.go:127.80,132.2 3 1
+github.com/aiym182/booking/internal/handlers/handlers.go:141.80,150.16 3 1
+github.com/aiym182/booking/internal/handlers/handlers.go:153.2,154.15 2 1
+github.com/aiym182/booking/internal/handlers/handlers.go:150.16,152.3 1 0
+github.com/aiym182/booking/internal/handlers/handlers.go:158.71,160.2 1 1
+github.com/aiym182/booking/internal/handlers/handlers.go:162.82,166.9 2 1
+github.com/aiym182/booking/internal/handlers/handlers.go:173.2,179.4 4 0
+github.com/aiym182/booking/internal/handlers/handlers.go:166.9,171.3 4 1

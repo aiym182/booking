@@ -1,0 +1,24 @@
+mode: set
+github.com/aiym182/booking/internal/render/render.go:20.37,22.2 1 1
+github.com/aiym182/booking/internal/render/render.go:24.84,34.2 5 1
+github.com/aiym182/booking/internal/render/render.go:37.106,42.18 3 1
+github.com/aiym182/booking/internal/render/render.go:51.2,52.9 2 1
+github.com/aiym182/booking/internal/render/render.go:57.2,61.16 3 1
+github.com/aiym182/booking/internal/render/render.go:65.2,65.12 1 1
+github.com/aiym182/booking/internal/render/render.go:42.18,44.3 1 0
+github.com/aiym182/booking/internal/render/render.go:44.8,46.17 2 1
+github.com/aiym182/booking/internal/render/render.go:46.17,48.4 1 0
+github.com/aiym182/booking/internal/render/render.go:52.9,55.3 1 1
+github.com/aiym182/booking/internal/render/render.go:61.16,64.3 2 0
+github.com/aiym182/booking/internal/render/render.go:70.67,76.16 3 1
+github.com/aiym182/booking/internal/render/render.go:80.2,80.29 1 1
+github.com/aiym182/booking/internal/render/render.go:106.2,106.21 1 1
+github.com/aiym182/booking/internal/render/render.go:76.16,78.3 1 0
+github.com/aiym182/booking/internal/render/render.go:80.29,85.17 3 1
+github.com/aiym182/booking/internal/render/render.go:89.3,91.17 2 1
+github.com/aiym182/booking/internal/render/render.go:95.3,95.23 1 1
+github.com/aiym182/booking/internal/render/render.go:85.17,87.4 1 0
+github.com/aiym182/booking/internal/render/render.go:91.17,93.4 1 0
+github.com/aiym182/booking/internal/render/render.go:95.23,98.18 2 1
+github.com/aiym182/booking/internal/render/render.go:101.4,101.22 1 1
+github.com/aiym182/booking/internal/render/render.go:98.18,100.5 1 0

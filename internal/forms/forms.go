@@ -29,7 +29,7 @@ func New(data url.Values) *Form {
 
 // Has Checks if required field is in post and not empty
 func (f *Form) Has(field string, r *http.Request) bool {
-	x := r.Form.Get(field)
+	x := f.Get(field)
 
 	return x != ""
 }
@@ -62,7 +62,7 @@ func (f *Form) MinLen(field string, length int) bool {
 	return true
 }
 
-func (f *Form) ValidatEmail(field string) {
+func (f *Form) ValidateEmail(field string) {
 	x := f.Get(field)
 
 	err := f.Validate.Var(x, "email")

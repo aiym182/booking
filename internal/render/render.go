@@ -1,9 +1,9 @@
 package render
 
 import (
+	"errors"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"path/filepath"
 
@@ -15,8 +15,10 @@ import (
 var functions = template.FuncMap{}
 
 var app *config.Config
+var fs = "../../template"
 
-func NewTemplates(a *config.Config) {
+// Renderer sets the config for Template package
+func NewRenderer(a *config.Config) {
 	app = a
 }
 
@@ -32,8 +34,8 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 
 }
 
-// Rendertemplate renders templates using html/templates
-func RenderTemplate(rw http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
+// template renders templates using html/templates
+func Template(rw http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 
 	var tc map[string]*template.Template
 	var err error
@@ -41,15 +43,16 @@ func RenderTemplate(rw http.ResponseWriter, r *http.Request, tmpl string, td *mo
 	if app.UseCache {
 		tc = app.TemplateCache
 	} else {
-		tc, err = RenderTemplateCache()
+		tc, err = CreateTemplateCache()
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
 
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal("Cannot find any templates")
+		// log.Fatal("Cannot find any templates")
+		return errors.New("can't get template from cache")
 	}
 
 	td = AddDefaultData(td, r)
@@ -57,15 +60,14 @@ func RenderTemplate(rw http.ResponseWriter, r *http.Request, tmpl string, td *mo
 	err = t.Execute(rw, td)
 
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
+	return nil
 
 }
 
 // create a template cache as a map
-func RenderTemplateCache() (map[string]*template.Template, error) {
-
-	fs, _ := filepath.Abs("../../template")
+func CreateTemplateCache() (map[string]*template.Template, error) {
 
 	myCache := map[string]*template.Template{}
 
@@ -94,9 +96,12 @@ func RenderTemplateCache() (map[string]*template.Template, error) {
 			ts, err := ts.ParseGlob(fmt.Sprintf("%s/*.layout.tmpl", fs))
 
 			if err != nil {
+
 				return myCache, nil
 			}
+
 			myCache[name] = ts
+
 		}
 
 	}
