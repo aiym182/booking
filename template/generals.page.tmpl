@@ -45,12 +45,12 @@
 
        noti.addEventListener("click",()=>{
         let html = `
-          <form id="check-availablity-form" action="" method="post" novalidate class="need-validation">
+          <form id="check-availability-form" action="" method="post" novalidate class="need-validation">
               <div class="columns" id="reservation-dates-modal">
                 <div class="column is-half"> 
                   <label class="label" for="sm">
                     <div class="control">
-                      <input disabled required id="sm" type="text"class="input" name="sm" placeholder="MM/DD/YYYY"></input>
+                      <input disabled required id="sm" type="text"class="input" name="start" placeholder="YYYY-MM-DD"></input>
                       <p class="help sh"id=sh>Select an available date</p>
                     </div>    
                   </label>         
@@ -59,7 +59,7 @@
                 <div class="column is-half"> 
                   <label class="label" for="em">
                     <div class="control">
-                      <input disabled required id="em" type="text" class="input" name="em" placeholder="MM/DD/YYYY"></input>
+                      <input disabled required id="em" type="text" class="input" name="end" placeholder="YYYY-MM-DD"></input>
                       <p class="help sh"id=sh>Select an available date</p>
                     </div>    
                   </label>         
@@ -76,6 +76,8 @@
               const dp = new DateRangePicker(el,{
                 button: 'button',
                  showOnFocus:true,
+                 format:'yyyy-mm-dd',
+                 minDate: new Date(),
               })
             },
             
@@ -87,19 +89,29 @@
 
           callback: function(result){
 
-          const form = document.getElementById("check-availablity-form")
+          const form = document.getElementById("check-availability-form")
            let formData = new FormData(form)
            let csrfToken = '{{.CSRFToken}}'
           formData.append("csrf_token",csrfToken);
+          formData.append("room_id", "1");
              fetch('search-availability-json',{
-            method:'post',
-            body:formData,
+               method:'post',
+               body:formData,
              })
              .then(response=>response.json())
-            .then((data)=>{
-              console.log(data)
-              console.log(data.ok)
-              console.log(data.message)
+              .then((data)=>{
+                if (data.ok) attention.custom({
+                icon:'success',
+                showConfirmButton:false,
+                msg:'<p>Room is available!</p>'+'<br>' + '<p><a href="/book-room?id='+
+                  data.room_id
+                  + '&s='
+                  + data.start_date
+                  + '&e='
+                  + data.end_date
+                  + '"class="button is-success">Book Now!</a></p>'
+                })
+                else attention.error({msg:"No availability. Please select different date."})
              })
             }
           })

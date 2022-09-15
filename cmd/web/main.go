@@ -32,6 +32,12 @@ func main() {
 	}
 	defer db.SQL.Close()
 
+	defer close(app.MailChan)
+
+	// starting mail listener...
+	log.Println("Starting mail listener...")
+	listenForMail()
+
 	log.Printf("Web application on port %s\n", webport)
 
 	serve := &http.Server{
@@ -54,6 +60,9 @@ func run() (*driver.DB, error) {
 	gob.Register(models.Room{})
 	gob.Register(models.Restriction{})
 
+	mailChan := make(chan models.MailData)
+	app.MailChan = mailChan
+
 	//change this to true in production
 	app.InProduction = false
 
@@ -72,7 +81,7 @@ func run() (*driver.DB, error) {
 
 	//connect to DB
 
-	log.Println("Connecting to databse..")
+	log.Println("Connecting to database..")
 
 	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=Bookings user=brandonlee password=")
 	if err != nil {

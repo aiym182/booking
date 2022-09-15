@@ -23,6 +23,7 @@
       <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
       <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@4/bulma.css" rel="stylesheet">
 
+
     </head>
     <body>
    
@@ -64,7 +65,7 @@
             </a>
 
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link has-text-white is-arrowless">
+              <a class="navbar-link has-text-white">
                 Rooms
               </a>
 
@@ -84,6 +85,25 @@
             <a class="navbar-item has-text-white" href="/contact">
               Contact
             </a>
+            {{if eq .IsAuthenticated 1}}
+              <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link has-text-white">
+                  Admin
+                  </a>
+
+                  <div class="navbar-dropdown is-boxed">
+                      <a class="navbar-item" href="/admin/dashboard">
+                      DashBoard
+                      </a>
+                      <a class="navbar-item" href="/user/logout">
+                      Logout
+                      </a>
+                  </div>
+              </div>
+              {{else}}
+              <a class ="navbar-item has-text-white" href="/user/login">Login</a>
+
+            {{end}}
           </div>
         </div>
       </nav>
@@ -112,6 +132,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script> -->
         <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+        <script src="/static/js/app.js"></script>
 
     {{block "js" .}}
 
@@ -123,124 +144,7 @@
 
 
       let attention = Promt()
-      
-      function Promt(){
-        let toast = function (c){
-
-          const {
-            msg ="",
-            icon = "success",
-            position = "top-end",
-
-          } = c
-
-            const Toast = Swal.mixin({
-            toast: true,
-            title:msg,
-            position: position,
-            icon:icon,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-             }
-           })
-
-            Toast.fire()
-
-
-        }
-        let success = function (c){
-
-          const {
-            icon = 'success',
-            title = "",
-            msg = "",
-
-          } = c
-
-          Swal.fire({
-              title: title,
-              text: msg,
-          })
-
-        }
-
-        let error = (c) =>{
-          const {
-            icon = "error",
-            title = "",
-            msg = "",
-
-          } = c
-
-          Swal.fire({
-              title: title,
-              text: msg,
-          })
-        }
-
-       async function custom(c){
-          const{
-            msg = "",
-            title = "",
-          } = c 
-
-          const {value :result } = await Swal.fire({
-            title:title,
-            html:msg,
-            backdrop:false,
-            focusConfirm:false,
-            showCancelButton:true,
-            willOpen:()=>{
-              if (c.willOpen !== undefined){
-                c.willOpen()
-              }
-            },
-            preConfirm: () => {
-              return [
-                document.getElementById('sm').value,
-                document.getElementById('em').value
-              ]
-            },
-            didOpen:()=>{
-              if(c.didOpen !== undefined){
-                c.didOpen()
-              }
-            }
-          })
-
-
-          if(result){
-            if(result.dismiss !== Swal.DismissReason.cancel){
-              if(result.value != ""){
-                if(c.callback !== undefined){
-                    c.callback(result);
-                } else{
-                  c.callback(false);
-                }
-              
-              } else{
-                c.callback(false);
-              }
-            }
-          }
-
-        }
-
-        
-
-        return {
-          toast: toast,
-          success: success,
-          error : error,
-          custom: custom,
-        }
-      }
-
+     
       function notify(msg,msgType){
         notie.alert({
           type:msgType,

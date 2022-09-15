@@ -22,6 +22,8 @@ require (
 	github.com/jackc/pgtype v1.11.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/stretchr/testify v1.8.0 // indirect
+	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
+	github.com/xhit/go-simple-mail/v2 v2.11.0 // indirect
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
 	golang.org/x/sys v0.0.0-20210809222454-d867a43fc93e // indirect
 	golang.org/x/text v0.3.7 // indirect

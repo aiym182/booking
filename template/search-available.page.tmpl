@@ -15,7 +15,7 @@
                     <div class="column is-half ">
                       <label for="start" class="label" >Start date</label>
                        <div class="control">
-                          <input required type="text" class="input" name="start" placeholder="MM/DD/YYYY"></input>
+                          <input required type="text" class="input" name="start" placeholder="YYYY-MM-DD"></input>
                           <p class="help sh"id=sh>Select an available date</p>
                       </div>
                     </div>
@@ -23,7 +23,7 @@
                     <div class="column is-half">
                       <label for="start" class="label" >End date</label>
                         <div class="control">
-                            <input required type="text"class="input" name="end" placeholder="MM/DD/YYYY"></input>
+                            <input required type="text"class="input" name="end" placeholder="YYYY-MM-DD"></input>
                             <p class="help eh"id=eh>Select an available date</p>
                         </div>
                     </div>
@@ -50,9 +50,11 @@
         button: 'button',
         clearBtn:true,
         todayBtn:true,
+        format:"yyyy-mm-dd",
+        minDate: new Date(),
       }
       const rangepicker =new DateRangePicker(elem, options)
-    const fm = document.getElementById('need-validation')
+       const fm = document.getElementById('need-validation')
 
  </script>
 

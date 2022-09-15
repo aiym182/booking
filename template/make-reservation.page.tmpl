@@ -5,12 +5,26 @@
         <div class="container">
           <div class="columns">
             <div class="column">
-              <h1 class="is-size-3 my-3 has-text-black">Make reservation</h1>
-
 
               {{$res :=index .Data "reservation"}}
+
+              <h1 class="is-size-3 my-3 has-text-black">Make a reservation</h1>
+              <p><strong>Reservation details</strong><br>
+
+              Room: {{$res.Room.RoomName}}<br>
+              Arrivals : {{index .StringMap "start_date"}}<br>
+              Departure : {{index .StringMap "end_date"}}
+              
+              </p>
+              
+              <br>
+
               <form method="post" action="/make-reservation" class="needs-validation" novalidate>
                <input type="hidden" name ="csrf_token" value='{{.CSRFToken}}'></input>
+               <input type="hidden" name="start_date" value="{{index .StringMap "start_date"}}"></input>
+               <input type="hidden" name="end_date" value="{{index .StringMap "end_date"}}"></input>
+               <input type="hidden" name="room_id" value="{{$res.RoomID}}"></input>
+ 
                 <div class="field">
                   <label for="first_name" class="label">First name</label>
                   <div class="control has-icons-right">
@@ -56,54 +70,7 @@
                   </div>
                 </div>
 
-
-                <div class="field">
-                  <label for="start_date" class="label">Start Date</label>
-                  <div class="control has-icons-right">
-                    <input
-                      required
-                      class="input {{with .Forms.Errors.Get "start_date"}} is-danger {{end}}"
-                      type="text"
-                      name="start_date"
-                      id="start_date"
-                      placeholder="YYYY/MM/DD"
-                      autocomplete="off"
-                      value = "{{$res.StartDate}}"
-
-                    />
-                    {{with .Forms.Errors.Get "start_date"}}
-                    <span class="icon is-right has-text-danger">
-                      <i class="fas fa-diamond-exclamation"></i>
-                    </span>
-                    <p class="help is-danger">{{.}}</p>
-                    {{end}}
-
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label for="end_date" class="label">End Date</label>
-                  <div class="control has-icons-right">
-                    <input
-                      required
-                      class="input {{with .Forms.Errors.Get "end_date"}} is-danger {{end}}"
-                      type="text"
-                      name="end_date"
-                      id="end_date"
-                      placeholder="YYYY/MM/DD"
-                      autocomplete="off"
-                      value = "{{$res.EndDate}}"
-
-                    />
-                    {{with .Forms.Errors.Get "end_date"}}
-                    <span class="icon is-right has-text-danger">
-                      <i class="fas fa-diamond-exclamation"></i>
-                    </span>
-                    <p class="help is-danger">{{.}}</p>
-                    {{end}}
-
-                  </div>
-                </div>
+                
 
                 <div class="field">
                   <label for="email" class="label">email</label>
