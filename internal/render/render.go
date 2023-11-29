@@ -6,16 +6,51 @@ import (
 	"html/template"
 	"net/http"
 	"path/filepath"
+	"time"
 
 	"github.com/aiym182/booking/internal/config"
 	"github.com/aiym182/booking/internal/models"
 	"github.com/justinas/nosurf"
 )
 
-var functions = template.FuncMap{}
+var functions = template.FuncMap{
+
+	"humanDate":  HumanDate,
+	"formatDate": FormatDate,
+	"iterate":    Iterate,
+	"add":        Add,
+}
 
 var app *config.Config
 var fs = "../../template"
+
+//HumanDate returns time in yyyy-mm-dd
+func HumanDate(t time.Time) string {
+
+	return t.Format("2006-01-02")
+}
+
+func FormatDate(t time.Time, f string) string {
+
+	return t.Format(f)
+}
+
+// Iterate returns a slice of ints, starting at 1 going to count
+func Iterate(count int) []int {
+
+	var i int
+	var items []int
+	for i = 0; i < count; i++ {
+		items = append(items, i)
+	}
+
+	return items
+}
+
+func Add(x, y int) int {
+
+	return x + y
+}
 
 // Renderer sets the config for Template package
 func NewRenderer(a *config.Config) {

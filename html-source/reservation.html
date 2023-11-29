@@ -139,7 +139,7 @@
 
 
      <script>
-      let attention = Promt()
+      let attention = Prompt()
 
       const elem = document.getElementById('date_picker');
       const options ={
@@ -150,7 +150,7 @@
         const rangepicker = new DateRangePicker(elem, options)
       const noti = document.getElementById('noti');
       noti.addEventListener("click",()=>{
-        // notify("This is error message",'error')
+        // ("This is error message",'error')
         // notifyModal('title',"<em>Hello World</em>",'success','My text for the button')
 
         // attention.toast({msg:"Hello World"})
@@ -206,7 +206,7 @@
         })
       }
 
-      function Promt(){
+      function Prompt(){
         let toast = function (c){
 
           const {

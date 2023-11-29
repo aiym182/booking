@@ -1,0 +1,171 @@
+{{template "admin" .}}
+
+{{define "page-title"}}
+   Reservation
+{{end}}
+
+{{define "content"}}
+
+{{$res := index .Data "reservation"}}
+{{$src := index .StringMap "src"}}
+
+
+   <p class="mb-5">
+   <strong>Arrival: </strong> {{humanDate $res.StartDate}} <br>
+   <strong>Departure: </strong> {{humanDate $res.EndDate}} <br>
+   <strong>Room: </strong> {{$res.Room.RoomName}} <br>
+   </p>
+
+
+              <form method="post" action="/admin/reservations/{{$src}}/{{$res.ID}}" class="needs-validation" novalidate>
+               <input type="hidden" name ="csrf_token" value='{{.CSRFToken}}'></input> 
+               <input type="hidden" name="year" value="{{index .StringMap "year"}}">
+               <input type="hidden" name="month" value="{{index .StringMap "month"}}">
+                <div class="field">
+                  <label for="first_name" class="label">First name</label>
+                  <div class="control has-icons-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "first_name"}} is-danger {{end}}"
+                      type="text"
+                      name="first_name"
+                      id="first_name"
+                      placeholder="First Name"
+                      autocomplete="off"
+                      value = "{{$res.FirstName}}"
+                    />
+                    {{with .Forms.Errors.Get "first_name"}}
+                    <span class="icon is-right has-text-danger">
+                      <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="last_name" class="label">Last name</label>
+                  <div class="control has-icons-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "last_name"}} is-danger {{end}}"
+                      type="text"
+                      name="last_name"
+                      id="last_name"
+                      placeholder="Last name"
+                      autocomplete="off"
+                      value = "{{$res.LastName}}"
+
+                    />
+                    {{with .Forms.Errors.Get "last_name"}}
+                    <span class="icon is-right has-text-danger">
+                      <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+
+                  </div>
+                </div>
+
+                
+
+                <div class="field">
+                  <label for="email" class="label">email</label>
+                  <div class="control has-icons-right has-icon-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "email"}} is-danger {{end}}"
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="example@email.com"
+                      autocomplete="off"
+                      value = "{{$res.Email}}"
+
+                    />
+
+                    {{with .Forms.Errors.Get "email"}}
+                    <span class="icon is-right has-text-danger">
+                     <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+                  
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="phone" class="label">Phone</label>
+                  <div class="control has-icons-right">
+                    <input
+                      required
+                      class="input {{with .Forms.Errors.Get "phone"}} is-danger {{end}}"
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      placeholder="xxx-xxx-xxxx"
+                      autocomplete="off"
+                      value = "{{$res.Phone}}"
+                    />
+                      {{with .Forms.Errors.Get "phone"}}
+                    <span class="icon is-right has-text-danger">
+                     <i class="fas fa-diamond-exclamation"></i>
+                    </span>
+                    <p class="help is-danger">{{.}}</p>
+                    {{end}}
+
+                  </div>
+                </div>
+
+                <div class="field">
+                    <div class ="control py-5">
+                      <div class="is-pulled-left">
+                        <input type="submit" class="button is-primary" value="Save"/>
+
+                        {{if eq $src "cal"}}
+                          <a href="#!" onclick="window.history.go(-1)" class="button is-warning">Cancel</a>
+                        {{else}}
+                        <a href="/admin/reservations-{{$src}}" class="button is-warning">Cancel</a>
+                        {{end}}
+                        {{if eq $res.Processed 0}}
+                        <a href="#" onclick="processRes({{$res.ID}})"class="button is-info">Mark as Processed</a>
+                        {{end}}
+                      </div>
+                      <div class="is-pulled-right">
+                      <a href="#" onclick="deleteRes({{$res.ID}})" class="button is-danger">Delete</a>
+                      </div>
+                      <div class="is-clearfix"></div>
+                    </div>
+                  
+                </div>
+              </form>
+
+{{end}}
+
+{{define "js"}}
+
+   {{$src := index .StringMap "src"}}
+   <script>
+         function processRes(id) {
+                  attention.custom({ 
+                  icon: 'warning',
+                  msg: 'Are you sure? ',
+                  callback : function(result){
+                  if (result !==false) window.location.href="/admin/process-reservation/{{$src}}/"
+                   +id +"/do?y={{index .StringMap "year"}}&m={{index .StringMap "month"}}";
+                  },
+                  })
+         }
+         function deleteRes(id) {
+                  attention.custom({ 
+                  icon: 'warning',
+                  msg: 'Are you sure? ',
+                  callback : function(result){
+                    if (result !==false) window.location.href="/admin/delete-reservation/{{$src}}/"
+                    +id
+                    +"/do?y={{index .StringMap "year"}}&m={{index .StringMap "month"}}";
+                  },
+                  })
+         }
+   </script>
+        
+{{end}}

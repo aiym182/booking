@@ -30,7 +30,6 @@ func New(data url.Values) *Form {
 // Has Checks if required field is in post and not empty
 func (f *Form) Has(field string, r *http.Request) bool {
 	x := f.Get(field)
-
 	return x != ""
 }
 

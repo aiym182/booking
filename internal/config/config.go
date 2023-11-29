@@ -17,4 +17,5 @@ type Config struct {
 	ErrorLog      *log.Logger
 	Session       *scs.SessionManager
 	MailChan      chan models.MailData
+	TestError     bool
 }

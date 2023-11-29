@@ -1,4 +1,4 @@
-function Promt() {
+function Prompt() {
   let toast = function (c) {
     const { msg = '', icon = 'success', position = 'top-end' } = c
 
@@ -54,12 +54,6 @@ function Promt() {
         if (c.willOpen !== undefined) {
           c.willOpen()
         }
-      },
-      preConfirm: () => {
-        return [
-          document.getElementById('sm').value,
-          document.getElementById('em').value,
-        ]
       },
       didOpen: () => {
         if (c.didOpen !== undefined) {

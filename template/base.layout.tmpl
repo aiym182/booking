@@ -128,11 +128,10 @@
         <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
         <script src="https://unpkg.com/notie"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-
+        <script src="/static/js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script> -->
         <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
-        <script src="/static/js/app.js"></script>
 
     {{block "js" .}}
 
@@ -143,7 +142,7 @@
      
 
 
-      let attention = Promt()
+      let attention = Prompt()
      
       function notify(msg,msgType){
         notie.alert({

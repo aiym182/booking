@@ -20,15 +20,24 @@ import (
 	"github.com/justinas/nosurf"
 )
 
-var app config.Config
+var app = &config.Config{}
 var session *scs.SessionManager
 var fs = "../../template"
-var functions = template.FuncMap{}
+var functions = template.FuncMap{
+	"humanDate":  render.HumanDate,
+	"formatDate": render.FormatDate,
+	"iterate":    render.Iterate,
+	"add":        render.Add,
+}
 
 func TestMain(m *testing.M) {
 
 	//Register what am I going to put in the session. (things like struct)
 	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
+	gob.Register(map[string]int{})
 	//change this to true in production
 	app.InProduction = false
 
@@ -59,11 +68,12 @@ func TestMain(m *testing.M) {
 
 	app.TemplateCache = tc
 	app.UseCache = true
+	app.TestError = false
 
-	repo := NewTestRepo(&app)
+	repo := NewTestRepo(app)
 
 	NewHandlers(repo)
-	render.NewRenderer(&app)
+	render.NewRenderer(app)
 
 	os.Exit(m.Run())
 }
@@ -97,6 +107,22 @@ func getRoutes() http.Handler {
 	mux.Get("/make-reservation", Repo.Reservation)
 	mux.Post("/make-reservation", Repo.PostReservation)
 	mux.Get("/reservation-summary", Repo.ReservationSummary)
+
+	mux.Get("/user/login", Repo.ShowLogin)
+	mux.Post("/user/login", Repo.PostShowLogin)
+	mux.Get("/user/logout", Repo.Logout)
+
+	mux.Get("/admin/dashboard", Repo.AdminDashBoard)
+	mux.Get("/admin/reservations-new", Repo.AdminNewReservations)
+	mux.Get("/admin/reservations-all", Repo.AdminAllReservations)
+	mux.Get("/admin/reservation-calendar", Repo.AdminReservationCalendar)
+	mux.Post("/admin/reservation-calendar", Repo.AdminPostReservationCalendar)
+	mux.Get("/admin/process-reservation/{src}/{id}/do", Repo.AdminProcessReservation)
+	mux.Get("/admin/delete-reservation/{src}/{id}/do", Repo.AdminDeleteReservation)
+
+	mux.Get("/admin/reservations/{src}/{id}/show", Repo.AdminShowReservation)
+	mux.Post("/admin/reservations/{src}/{id}", Repo.AdminPostShowReservation)
+
 	fileServer := http.FileServer(http.Dir("../../static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 

@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/gob"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/aiym182/booking/internal/config"
@@ -14,6 +16,7 @@ import (
 	"github.com/aiym182/booking/internal/models"
 	"github.com/aiym182/booking/internal/render"
 	"github.com/alexedwards/scs/v2"
+	"github.com/joho/godotenv"
 )
 
 const webport = ":8080"
@@ -24,6 +27,11 @@ var infoLog *log.Logger
 var errorLog *log.Logger
 
 func main() {
+	err := godotenv.Load("/Users/brandonlee/go/src/booking/.env")
+
+	if err != nil {
+		log.Fatalln("Unable to load .env file")
+	}
 
 	db, err := run()
 
@@ -59,12 +67,25 @@ func run() (*driver.DB, error) {
 	gob.Register(models.User{})
 	gob.Register(models.Room{})
 	gob.Register(models.Restriction{})
+	gob.Register(map[string]int{})
+
+	inProduction, _ := strconv.ParseBool(os.Getenv("INPRODUCTION"))
+	useCache, _ := strconv.ParseBool(os.Getenv("USECACHE"))
+
+	dbHost := os.Getenv("DBHOST")
+	dbPort := os.Getenv("DBPORT")
+	dbName := os.Getenv("DBNAME")
+	dbUser := os.Getenv("DBUSER")
+	dbPass := os.Getenv("DBPASS")
+	dbSSL := os.Getenv("DBSSL")
 
 	mailChan := make(chan models.MailData)
 	app.MailChan = mailChan
 
 	//change this to true in production
-	app.InProduction = false
+	app.InProduction = inProduction
+	// change this to true in production
+	app.UseCache = useCache
 
 	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	app.InfoLog = infoLog
@@ -82,8 +103,9 @@ func run() (*driver.DB, error) {
 	//connect to DB
 
 	log.Println("Connecting to database..")
-
-	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=Bookings user=brandonlee password=")
+	// "host=localhost port=5432 dbname=Bookings user=brandonlee password="
+	connectionString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslMode=%s", dbHost, dbPort, dbName, dbUser, dbPass, dbSSL)
+	db, err := driver.ConnectSQL(connectionString)
 	if err != nil {
 		log.Fatalf("Cannot connect to database : %v", err)
 	}
@@ -97,7 +119,7 @@ func run() (*driver.DB, error) {
 	}
 
 	app.TemplateCache = tc
-	app.UseCache = true
+	app.TestError = false
 
 	repo := handlers.NewRepo(app, db)
 
